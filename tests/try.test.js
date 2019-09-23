@@ -1,3 +1,8 @@
-test('adds 1 + 2 to equal 3', () => {
-  expect(1+2).toBe(3);
-});
+const request = require('supertest');
+
+const app = require('../src/app')
+
+test('Main', async () => {
+  const response = await request(app).get('/');
+  expect(response.statusCode).toBe(200);
+})

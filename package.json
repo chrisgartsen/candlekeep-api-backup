@@ -2,10 +2,10 @@
   "name": "candlekeep-api",
   "version": "0.0.1",
   "description": "Candlekeep backend API",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon ./server.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "nodemon": "^1.19.2"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
   }
 }
