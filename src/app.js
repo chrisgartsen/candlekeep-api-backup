@@ -2,6 +2,9 @@ const express = require('express')
 
 const auth = require('./routes/auth')
 
+require('./config/env')
+require('./config/database')
+
 const app = express()
 
 app.use('/auth', auth)
