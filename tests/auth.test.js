@@ -17,7 +17,35 @@ describe('Login', () => {
   })
 
   xtest('An invalid password returns an error', () => {
-    
+
+  })
+
+})
+
+describe('Signup', () => {
+  
+  test('Valid credentials create a user', () => {
+    return request(app)
+      .post('/auth/signup')
+      .send({ email: 'test@test.com', password: 'password'})
+      .set('Accept', 'application/json')
+      .expect(503)
+  })
+
+  xtest('Valid credentials return a JWT token', () => {
+
+  })
+
+  xtest('Missing email returns an error', () => {
+
+  })
+
+  xtest('Missing password returns an error', () => {
+
+  })
+
+  xtest('Duplicate email returns an error', () => {
+
   })
 
 })
