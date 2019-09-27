@@ -1,11 +1,15 @@
 const router = require('express').Router()
-const Joi = require('@hapi/joi');
 
 const Book = require('../models/book')
 const { validateBook } = require('../utils/validations')
 
-const bookSchema = Joi.object({
-    title: Joi.string().required()
+router.get('/', async(req, res) => {
+  try {
+    const books = await Book.find()
+    res.status(200).json({books: books })
+  } catch(err) {
+    res.status(500).json({ error: "Internal server error" })
+  }
 })
 
 router.get('/:id', async (req, res) => {
@@ -13,22 +17,23 @@ router.get('/:id', async (req, res) => {
     const book = await Book.findById(req.params.id)
     if(!book) return res.status(404).json({ error: 'Book not found'})
     res.status(200).json({book: book})
-  } catch(error) {
+  } catch(err) {
     res.status(500).json({ error: "Internal server error" })
   }
 })
 
 router.post('/', async (req, res) => {
   const error = validateBook(req.body)
-  if(error) {
-    return res.status(422).json({ error: error.details[0].message })
+  if(error) return res.status(422).json({ error: error.details[0].message })
+
+  try {
+    const book = await Book.create({
+      title: req.body.title
+    })
+    res.status(201).json({ book: book })
+  } catch(err) {
+    res.status(500).json({ error: "Internal server error" })
   }
-
-  const book = await Book.create({
-    title: req.body.title
-  })
-
-  res.status(201).json({ book: book })
 })
 
 module.exports = router

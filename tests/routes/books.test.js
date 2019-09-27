@@ -5,12 +5,30 @@ const app =  require('../../src/app')
 const Book = require('../../src/models/book')
 
 describe('Get all books', () => {
-  xtest('GET returns a array with all books for a user', () => {
-
+  test('GET returns a array with all books', async (done) => {
+    await Book.deleteMany()
+    const first = await Book.create({ title: 'First book' })
+    const second = await Book.create({ title: 'Second book' })
+    request(app)
+      .get('/api/books')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.books.length).toBe(2)
+        expect(res.body.books[0].title).toBe(first.title)
+        expect(res.body.books[1].title).toBe(second.title)
+        done()
+      })
   })
 
-  xtest('GET returns an empty array when no books are found for a user', () => {
-
+  test('GET returns an empty array when no books are found', async (done) => {
+    await Book.deleteMany()
+    request(app)
+      .get('/api/books')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.books).toEqual([])
+        done()
+      })
   })
 })
 
@@ -18,6 +36,7 @@ describe('Get one book', () => {
   let book = null
 
   beforeEach(async(done) => {
+    await Book.deleteMany()
     book = await Book.create({ title: 'The title' })
     done()
   })
