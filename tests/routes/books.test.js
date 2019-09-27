@@ -1,8 +1,8 @@
 const request = require('supertest');
 const mongoose = require('mongoose')
 
-const app =  require('../src/app')
-const Book = require('../src/models/book')
+const app =  require('../../src/app')
+const Book = require('../../src/models/book')
 
 describe('Get all books', () => {
   xtest('GET returns a array with all books for a user', () => {
