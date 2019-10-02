@@ -20,4 +20,8 @@ app.get('/', (req, res, next) => {
   res.json({version: "0.0.1"})
 })
 
+app.use('*', (req, res, next) => {
+  res.status(404).json({error: "Page not found"})
+})
+
 module.exports = app
