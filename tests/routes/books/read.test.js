@@ -5,8 +5,14 @@ const app =  require('../../../src/app')
 const Book = require('../../../src/models/book')
 
 describe('Get all books', () => {
-  test('GET returns a array with all books', async (done) => {
+
+  beforeEach(async(done) => {
     await Book.deleteMany()
+    done()
+  })
+
+
+  test('GET returns a array with all books', async (done) => {
     const first = await Book.create({ title: 'First book' })
     const second = await Book.create({ title: 'Second book' })
     request(app)
@@ -21,7 +27,6 @@ describe('Get all books', () => {
   })
 
   test('GET returns an empty array when no books are found', async (done) => {
-    await Book.deleteMany()
     request(app)
       .get('/api/books')
       .expect(200)

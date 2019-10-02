@@ -13,7 +13,7 @@ describe('Delete book', () => {
     done()
   })
 
-  test('DELETE deletes a book and returns the deleted book', (done) => {
+  test('DELETE deletes a book and returns the deleted book', async (done) => {
     request(app)
       .delete('/api/books/' + book._id)
       .expect(200)
@@ -23,8 +23,9 @@ describe('Delete book', () => {
         done()
       })
 
-    const count = Book.count()
-    console.log('Books', count)
+    const count = await Book.countDocuments()
+    console.log(count)
+    expect(count).toBe(0)
   })
 
   test('DELETE returns an error when no book is found', (done) => {
