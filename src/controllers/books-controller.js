@@ -1,9 +1,9 @@
 const Book = require('../models/book')
-const { validateBook } = require('../utils/validations')
+const { validate, bookSchema } = require('../utils/validations')
 
 module.exports.create = async (req, res, next) => {
-  const error = validateBook(req.body)
-  if(error) return res.status(422).json({ error: error.details[0].message })
+  const error = validate(req.body, bookSchema)
+  if(error) return res.status(422).json({ error: error.message })
   try {
     const book = await Book.create({
       title: req.body.title
@@ -44,8 +44,8 @@ module.exports.getOne = async (req, res, next) => {
 }
 
 module.exports.update = async (req, res) => {
-  const error = validateBook(req.body)
-  if(error) return res.status(422).json({ error: error.details[0].message })
+  const error = validate(req.body, bookSchema)
+  if(error) return res.status(422).json({ error: error.message })
   try {
     const book = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true })
     if(!book) return res.status(404).json({ error: 'Book not found'})
