@@ -35,10 +35,28 @@ module.exports.create = async (req, res, next) => {
   } 
 }
 
-module.exports.delete = (req, res, next) => {
-
+module.exports.delete = async (req, res, next) => {
+  try {
+    const user = await User.findOneAndDelete({ _id: req.params.id })
+    if(!user) return res.status(404).json({ error: "User not found" })
+    return res.status(200).json({ user })
+  } catch(err) {
+    next(err)
+  }
 }
 
-module.exports.update = (req, res, next) => {
-
+module.exports.update = async (req, res, next) => {
+  const error = validate(req.body, userSchema)
+  if(error) return res.status(422).json({ error: error.message })
+  try { 
+    const user = await User.findOneAndUpdate(
+        { _id: req.params.id}, 
+        req.body, 
+        { runValidators: true, context: 'query', new: true }
+    )
+    if(!user) return res.status(404).json({ error: "User not found" })
+    res.status(200).json( { user })
+  } catch(err) {
+    next(err)
+  }
 }
