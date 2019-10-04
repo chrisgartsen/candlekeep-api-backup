@@ -1,7 +1,7 @@
 const Book = require('../models/book')
 const { validateBook } = require('../utils/validations')
 
-module.exports.create = async (req, res) => {
+module.exports.create = async (req, res, next) => {
   const error = validateBook(req.body)
   if(error) return res.status(422).json({ error: error.details[0].message })
   try {
@@ -10,16 +10,47 @@ module.exports.create = async (req, res) => {
     })
     res.status(201).json({ book: book })
   } catch(err) {
-    res.status(500).json({ error: "Internal server error" })
+    next(err)
   }
 }
 
-module.exports.delete = async (req, res) => {
+module.exports.delete = async (req, res, next) => {
   try {
     const book = await Book.findOneAndDelete({ _id: req.params.id })
     if(!book) return res.status(404).json({ error: 'Book not found'})
     res.status(200).json({book: book})
   } catch(err) {
-    res.status(500).json({ error: "Internal server error" })
+    next(err)
+  }
+}
+
+module.exports.getAll = async (req, res, next) => {
+  try {
+    const books = await Book.find()
+    res.status(200).json({ books: books })
+  } catch(err) {
+    next(err)
+  }
+}
+
+module.exports.getOne = async (req, res, next) => {
+  try {
+    const book = await Book.findById(req.params.id)
+    if(!book) return res.status(404).json({ error: 'Book not found'})
+    res.status(200).json({book: book})    
+  } catch(err) {
+    next(err)
+  }
+}
+
+module.exports.update = async (req, res) => {
+  const error = validateBook(req.body)
+  if(error) return res.status(422).json({ error: error.details[0].message })
+  try {
+    const book = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true })
+    if(!book) return res.status(404).json({ error: 'Book not found'})
+    res.status(200).json({book: book})
+  } catch(err) {
+    next(err)
   }
 }
