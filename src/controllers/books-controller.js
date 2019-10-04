@@ -47,7 +47,7 @@ module.exports.update = async (req, res) => {
   const error = validate(req.body, bookSchema)
   if(error) return res.status(422).json({ error: error.message })
   try {
-    const book = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true })
+    const book = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     if(!book) return res.status(404).json({ error: 'Book not found'})
     res.status(200).json({book: book})
   } catch(err) {

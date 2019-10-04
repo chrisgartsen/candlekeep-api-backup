@@ -4,6 +4,7 @@ const helmet = require('helmet')
 
 const auth = require('./routes/auth')
 const books = require('./routes/books')
+const users = require('./routes/user')
 
 require('./config/env')
 require('./config/database').connectDB()
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 
 app.use('/auth', auth)
 app.use('/api/books', books)
+app.use('/api/users', users)
 
 app.get('/', (req, res, next) => {
   res.json({version: "0.0.1"})
