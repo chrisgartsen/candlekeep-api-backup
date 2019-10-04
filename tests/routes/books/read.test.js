@@ -11,7 +11,6 @@ describe('Get all books', () => {
     done()
   })
 
-
   test('GET returns a array with all books', async (done) => {
     const first = await Book.create({ title: 'First book' })
     const second = await Book.create({ title: 'Second book' })
