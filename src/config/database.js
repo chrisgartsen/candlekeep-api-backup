@@ -1,8 +1,14 @@
 const mongoose = require('mongoose')
 
+
+
 const connectDB = () => {
   try {
-    mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(process.env.DATABASE, 
+      { useNewUrlParser: true, 
+        useUnifiedTopology: true,
+        useFindAndModify: false
+      })
   } catch(error) {
     console.log(error)
   }
