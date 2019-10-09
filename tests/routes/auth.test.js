@@ -24,7 +24,7 @@ describe('Login', () => {
 
 describe('Signup', () => {
   
-  test('Valid credentials create a user', () => {
+  xtest('Valid credentials create a user', () => {
     return request(app)
       .post('/auth/signup')
       .send({ email: 'test@test.com', password: 'password'})

@@ -1,14 +1,23 @@
-const { validateBook } = require('../../src/utils/validations')
+const { validate, bookSchema } = require('../../src/utils/validations')
 
-test('Returns an empty error when validation passes', () => {
-  const bookData = { 
-    title: "My Title"
-  }
-  expect(validateBook(bookData)).toBeUndefined()
-}) 
+describe('Book validations', () => {
 
-test('Retuns an error when the title is missing', () => {
-  const error = validateBook({})
-  expect(error).toBeDefined()
-  expect(error.details[0].message).toBe('"title" is required')
+  test('Returns an empty error when validation passes', () => {
+    const bookData = { 
+      title: "My Title"
+    }
+    expect(validate(bookData, bookSchema)).toBeUndefined()
+  }) 
+  
+  test('Returns an error when the title is missing', () => {
+    const error = validate({}, bookSchema)
+    expect(error).toBeDefined()
+    expect(error.details[0].message).toBe('"title" is required')
+  })
+
+  xtest('Returns an error when the author is missing', () => {
+    
+  })
+  
 })
+

@@ -1,5 +1,4 @@
 const request = require('supertest');
-const mongoose = require('mongoose')
 
 const app =  require('../../../src/app')
 const Book = require('../../../src/models/book')
@@ -25,7 +24,7 @@ describe('Create book', () => {
       })
   })
 
-  test('POST returns an error when the title is missing', (done) => {
+  test('POST returns an error when required attributes are missing', (done) => {
     request(app)
       .post('/api/books')
       .send({})

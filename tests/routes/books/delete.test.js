@@ -17,18 +17,16 @@ describe('Delete book', () => {
     request(app)
       .delete('/api/books/' + book._id)
       .expect(200)
-      .end((err, res) => {
+      .end(async (err, res) => {
         expect(res.body.book.title).toBe(book.title)
         expect(res.body.book._id.toString()).toBe(book._id.toString())
+        const countAfter = await Book.countDocuments()
+        expect(countAfter).toBe(0)
         done()
       })
-
-    const count = await Book.countDocuments()
-    console.log(count)
-    expect(count).toBe(0)
   })
 
-  test('DELETE returns an error when no book is found', (done) => {
+  xtest('DELETE returns an error when no book is found', (done) => {
     const id = mongoose.Types.ObjectId()
     request(app)
       .delete('/api/books/' + id)
