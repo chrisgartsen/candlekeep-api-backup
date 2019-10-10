@@ -26,7 +26,7 @@ describe('Delete book', () => {
       })
   })
 
-  xtest('DELETE returns an error when no book is found', (done) => {
+  test('DELETE returns an error when no book is found', (done) => {
     const id = mongoose.Types.ObjectId()
     request(app)
       .delete('/api/books/' + id)
