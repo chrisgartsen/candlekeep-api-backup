@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -21,7 +22,14 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(uniqueValidator)
 
-userSchema.pre('save', function(){
+userSchema.pre('save', async function(){
+  try {
+    this.password = await bcrypt.hash(this.password, 10)
+  } catch(err) {
+    console.log(err)
+    throw(err)
+  }
+
   console.log("Before save -> hash password")
 })
 

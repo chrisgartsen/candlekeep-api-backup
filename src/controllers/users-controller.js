@@ -29,7 +29,7 @@ module.exports.create = async (req, res, next) => {
       password: req.body.password,
       admin: req.body.admin
     })
-    res.status(201).json({ user })
+    res.status(201).json({ email: user.email, admin: user.admin })
   } catch(err) {
     next(err)
   } 
