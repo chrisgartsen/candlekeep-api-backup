@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(uniqueValidator)
 
+userSchema.methods.checkCredentials = async function(password) {
+  return await bcrypt.compare(password, this.password)
+}
+
 userSchema.pre('save', async function(){
   try {
     this.password = await bcrypt.hash(this.password, 10)
@@ -29,8 +33,6 @@ userSchema.pre('save', async function(){
     console.log(err)
     throw(err)
   }
-
-  console.log("Before save -> hash password")
 })
 
 module.exports = mongoose.model('User', userSchema)
