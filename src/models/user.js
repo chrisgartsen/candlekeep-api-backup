@@ -35,13 +35,8 @@ userSchema.methods.generateToken = async function() {
   }
 }
 
-userSchema.methods.verifyToken = async function(token) {
-  try {
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET )
-    console.log(decoded)
-  } catch(err) {
-    console.log(err)
-  }
+userSchema.statics.verifyToken = function(token) {
+  return jwt.verify(token, process.env.JWT_SECRET )
 }
 
 userSchema.pre('save', async function(){
