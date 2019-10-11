@@ -10,6 +10,10 @@ module.exports.userSchema = Joi.object({
   admin: Joi.boolean()
 })
 
+module.exports.authorSchema = Joi.object({
+  name: Joi.string().required()
+})
+
 module.exports.validate = (data, schema) => {
   const error = schema.validate(data).error
   if(error) error.message = error.details[0].message

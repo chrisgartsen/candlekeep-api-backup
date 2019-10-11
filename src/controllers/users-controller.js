@@ -3,7 +3,6 @@ const { validate, userSchema } = require('../utils/validations')
 
 module.exports.getAll = async (req, res, next) => {
   try {
-    console.log("The user", req.current_user)
     const users = await User.find()
     res.status(200).json({ users })
   } catch(err) {
