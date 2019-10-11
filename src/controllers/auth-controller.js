@@ -33,3 +33,9 @@ module.exports.verifyToken = async (req, res, next) => {
     res.status(401).json({error: 'Authentication failed'})
   }
 }
+
+module.exports.verifyAdmin = (req, res, next) => {
+  const user = req.current_user
+  if(!user || !user.admin) return res.status(403).json({ error: 'User not authorised' })
+  next()
+}

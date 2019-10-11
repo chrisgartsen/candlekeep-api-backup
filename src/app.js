@@ -16,6 +16,7 @@ app.use(helmet())
 app.use(bodyParser.json())
 
 app.use('/api', auth.verifyToken)
+app.use('/api/admin', auth.verifyAdmin)
 app.post('/auth/login', auth.login)
 
 app.use('/api/books', books)
