@@ -29,6 +29,7 @@ module.exports.verifyToken = async (req, res, next) => {
     req.current_user = user
     next()
   } catch(err) {
+    console.log(err)
     res.status(401).json({error: 'Authentication failed'})
   }
 }
