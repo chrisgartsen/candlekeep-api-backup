@@ -13,7 +13,7 @@ describe('Delete book', () => {
     done()
   })
 
-  test('DELETE deletes a book and returns the deleted book', async (done) => {
+  xtest('DELETE deletes a book and returns the deleted book', async (done) => {
     request(app)
       .delete('/api/books/' + book._id)
       .expect(200)
@@ -26,7 +26,7 @@ describe('Delete book', () => {
       })
   })
 
-  test('DELETE returns an error when no book is found', (done) => {
+  xtest('DELETE returns an error when no book is found', (done) => {
     const id = mongoose.Types.ObjectId()
     request(app)
       .delete('/api/books/' + id)

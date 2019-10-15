@@ -45,7 +45,7 @@ describe('Get one book', () => {
     done()
   })
 
-  test('GET returns the requested book', (done) => {
+  xtest('GET returns the requested book', (done) => {
     request(app)
       .get('/api/books/' + book._id)
       .expect(200)
@@ -56,7 +56,7 @@ describe('Get one book', () => {
       })
   })
 
-  test('GET returns an error when no book is found', (done) => {
+  xtest('GET returns an error when no book is found', (done) => {
     const id = mongoose.Types.ObjectId()
     request(app)
       .get('/api/books/' + id)
@@ -67,7 +67,7 @@ describe('Get one book', () => {
       })
   })
 
-  test('GET returns an error when a server error occurs', (done) => {
+  xtest('GET returns an error when a server error occurs', (done) => {
     request(app)
       .get('/api/books/invalid')
       .expect(505)

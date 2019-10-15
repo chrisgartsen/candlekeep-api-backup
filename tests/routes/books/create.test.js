@@ -10,7 +10,7 @@ describe('Create book', () => {
     done()
   })
 
-  test('POST creates a book', (done) => {
+  xtest('POST creates a book', (done) => {
     const book = { title: 'The book title' }
 
     request(app)
@@ -24,7 +24,7 @@ describe('Create book', () => {
       })
   })
 
-  test('POST returns an error when required attributes are missing', (done) => {
+  xtest('POST returns an error when required attributes are missing', (done) => {
     request(app)
       .post('/api/books')
       .send({})
