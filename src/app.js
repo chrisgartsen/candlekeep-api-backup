@@ -4,6 +4,7 @@ const helmet = require('helmet')
 
 const auth = require('./controllers/auth-controller')
 
+const isbn = require('./routes/isbn')
 const books = require('./routes/books')
 const users = require('./routes/users')
 const authors = require('./routes/authors')
@@ -20,6 +21,7 @@ app.use('/api', auth.verifyToken)
 app.use('/api/admin', auth.verifyAdmin)
 app.post('/auth/login', auth.login)
 
+app.use('/api/isbn', isbn)
 app.use('/api/books', books)
 app.use('/api/authors', authors)
 app.use('/api/admin/users', users)
