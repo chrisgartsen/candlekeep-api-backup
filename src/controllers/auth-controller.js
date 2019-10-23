@@ -10,11 +10,12 @@ module.exports.login = async (req, res, next) => {
     const valid = await user.checkCredentials(password)
     if(valid) {
       const token = await user.generateToken()
-      res.status(200).header('x-auth-token', token).json({ token }) 
+      res.status(200).header('x-auth-token', token).json({ token: token, id: user._id }) 
     } else {
       res.status(401).json({ error: 'Authentication failed' })
     }
   } catch(err) {
+    console.log(err)
     next(err)
   }
 }
