@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
+const cors = require('cors')
 
 const auth = require('./controllers/auth-controller')
 
@@ -15,6 +16,7 @@ require('./config/database').connectDB()
 const app = express()
 
 app.use(helmet())
+app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/api', auth.verifyToken)
