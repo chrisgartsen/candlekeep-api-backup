@@ -1,6 +1,7 @@
 const Joi = require('@hapi/joi');
 
 module.exports.bookSchema = Joi.object({
+  isbn: Joi.string().allow('', null),
   title: Joi.string().required()
 })
 
