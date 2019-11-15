@@ -3,10 +3,21 @@ const { validate, bookSchema } = require('../utils/validations')
 
 module.exports.create = async (req, res, next) => {
   const error = validate(req.body, bookSchema)
-  if(error) return res.status(422).json({ error: error.message })
+  if(error) {
+    console.log("Error", error)
+    return res.status(422).json({ error: error.message }) 
+  }
   try {
     const book = await Book.create({
-      title: req.body.title
+      isbn: req.body.isbn,
+      title: req.body.title,
+      author: req.body.author,
+      publisher: req.body.publisher,
+      genre: req.body.genre,
+      language: req.body.language,
+      publishedDate: req.body.publishedDate,
+      description: req.body.description,
+      thumbnail: req.body.thumbnail
     })
     res.status(201).json({ book: book })
   } catch(err) {
