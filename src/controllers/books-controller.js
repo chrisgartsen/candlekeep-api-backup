@@ -9,6 +9,7 @@ module.exports.create = async (req, res, next) => {
   }
   try {
     const book = await Book.create({
+      user: req.body.userId,
       isbn: req.body.isbn,
       title: req.body.title,
       author: req.body.author,

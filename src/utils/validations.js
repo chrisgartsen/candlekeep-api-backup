@@ -1,6 +1,8 @@
-const Joi = require('@hapi/joi');
+const Joi = require('@hapi/joi')
+Joi.objectId = require('joi-objectid')(Joi)
 
 module.exports.bookSchema = Joi.object({
+  user: Joi.objectId().required(),
   isbn: Joi.string().allow('', null),
   title: Joi.string().required(),
   author: Joi.string().allow('', null),
