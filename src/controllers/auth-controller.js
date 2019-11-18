@@ -27,7 +27,7 @@ module.exports.verifyToken = async (req, res, next) => {
     const decoded = await User.verifyToken(token)
     const user = await User.findById(decoded.data)
     if(!user) return res.status(401).json({error: 'Authentication failed'})
-    req.current_user = user
+    req.currentUser = user
     next()
   } catch(err) {
     console.log(err)
@@ -36,7 +36,7 @@ module.exports.verifyToken = async (req, res, next) => {
 }
 
 module.exports.verifyAdmin = (req, res, next) => {
-  const user = req.current_user
+  const user = req.currentUser
   if(!user || !user.admin) return res.status(403).json({ error: 'User not authorised' })
   next()
 }
