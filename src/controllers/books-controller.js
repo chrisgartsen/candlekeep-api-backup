@@ -19,7 +19,7 @@ module.exports.create = async (req, res, next) => {
       description: req.body.description,
       thumbnail: req.body.thumbnail
     })
-    res.status(201).json({ book: book })
+    res.status(201).json({ book })
   } catch(err) {
     next(err)
   }

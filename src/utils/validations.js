@@ -21,6 +21,7 @@ module.exports.userSchema = Joi.object({
 })
 
 module.exports.authorSchema = Joi.object({
+  user: Joi.objectId().required(),
   name: Joi.string().required()
 })
 
