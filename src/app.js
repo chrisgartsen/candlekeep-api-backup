@@ -5,9 +5,9 @@ const cors = require('cors')
 
 const auth = require('./controllers/auth-controller')
 
-const isbn = require('./routes/isbn')
-const books = require('./routes/books')
-const users = require('./routes/users')
+const isbn =    require('./routes/isbn')
+const books =   require('./routes/books')
+const users =   require('./routes/users')
 const authors = require('./routes/authors')
 
 require('./config/env')
@@ -22,6 +22,7 @@ app.use(bodyParser.json())
 app.use('/api', auth.verifyToken)
 app.use('/api/admin', auth.verifyAdmin)
 app.post('/auth/login', auth.login)
+app.get('/auth/verify_token', auth.verifyToken)
 
 app.use('/api/isbn', isbn)
 app.use('/api/books', books)
