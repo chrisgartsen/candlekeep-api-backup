@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use('/api', auth.verifyToken)
 app.use('/api/admin', auth.verifyAdmin)
 app.post('/auth/login', auth.login)
-app.get('/auth/verify_token', auth.verifyToken)
+app.get('/auth/verify_credentials', auth.verifyCredentials)
 
 app.use('/api/isbn', isbn)
 app.use('/api/books', books)

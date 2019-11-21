@@ -35,6 +35,21 @@ module.exports.verifyToken = async (req, res, next) => {
   }
 }
 
+module.exports.verifyCredentials = async (req, res, next) => {
+  console.log("Verifying Credentials")
+  const token = req.header('x-auth-token')
+  if(!token) return res.status(401).json({ error: 'Token missing' })
+  try {
+    const decoded = await User.verifyToken(token)
+    const user = await User.findById(decoded.data)
+    if(!user) return res.status(401).json({error: 'Authentication failed'})
+    res.status(200).json({ message: 'Credentials valid' })
+  } catch(err) {
+    console.log(err)
+    res.status(401).json({error: 'Authentication failed'})
+  }
+}
+
 module.exports.verifyAdmin = (req, res, next) => {
   const user = req.currentUser
   if(!user || !user.admin) return res.status(403).json({ error: 'User not authorised' })
