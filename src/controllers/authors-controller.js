@@ -5,12 +5,12 @@ module.exports.create = async (req, res, next) => {
   const error = validate(req.body, authorSchema)
   if(error) return res.status(422).json({ error: error.message })
   if(req.currentUser._id != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
-
   try {
     const author = await Author.create({
       user: req.body.user,
       name: req.body.name
     })
+    console.log("Created author")
     res.status(201).json({ author })
   } catch(err) {
     next(err)

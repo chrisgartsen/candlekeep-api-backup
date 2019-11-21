@@ -36,7 +36,6 @@ module.exports.verifyToken = async (req, res, next) => {
 }
 
 module.exports.verifyCredentials = async (req, res, next) => {
-  console.log("Verifying Credentials")
   const token = req.header('x-auth-token')
   if(!token) return res.status(401).json({ error: 'Token missing' })
   try {
