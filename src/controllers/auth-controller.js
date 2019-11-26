@@ -30,7 +30,6 @@ module.exports.verifyToken = async (req, res, next) => {
     req.currentUser = user
     next()
   } catch(err) {
-    console.log(err)
     res.status(401).json({error: 'Authentication failed'})
   }
 }
@@ -44,7 +43,6 @@ module.exports.verifyCredentials = async (req, res, next) => {
     if(!user) return res.status(401).json({error: 'Authentication failed'})
     res.status(200).json({ message: 'Credentials valid' })
   } catch(err) {
-    console.log(err)
     res.status(401).json({error: 'Authentication failed'})
   }
 }
