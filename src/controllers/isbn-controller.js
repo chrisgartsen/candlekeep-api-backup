@@ -3,7 +3,7 @@ const Axios = require('axios')
 module.exports.findBookByIsbn = async (req, res, next) => {
   const isbn = req.params.isbn
 
-  if(!isbn || isbn.length < 10) res.status(422).json({ error: 'Invalid ISBN' })
+  if(!isbn || isbn.length < 10) return res.status(422).json({ error: 'Invalid ISBN' })
 
   try {
     let result = await Axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
