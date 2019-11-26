@@ -5,7 +5,7 @@ module.exports.bookSchema = Joi.object({
   user: Joi.objectId().required(),
   isbn: Joi.string().allow('', null),
   title: Joi.string().required(),
-  author: Joi.string().allow('', null),
+  author: Joi.object().allow('', null),
   genre: Joi.string().allow('', null),
   publisher: Joi.string().allow('', null),
   publishedDate: Joi.string().allow('', null),
