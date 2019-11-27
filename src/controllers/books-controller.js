@@ -2,36 +2,27 @@ const Book = require('../models/book')
 const Author = require('../models/author')
 const { validate, bookSchema } = require('../utils/validations')
 
+const buildOrCreateAuthor = async (req) => {
+  if(req.body.author) {
+    if(req.body.author._id) { 
+      return { 
+        _id: req.body.author._id
+      }
+    } else {
+      return await Author.create({
+        user: req.body.user,
+        name: req.body.author.name
+      })
+    }
+  }
+}
+
 module.exports.create = async (req, res, next) => {
   const error = validate(req.body, bookSchema)
   if(error) return res.status(422).json({ error: error.message }) 
   if(req.currentUser._id != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
 
-  console.log("CREATING BOOK")
-
-  // Check if the author object has an _id and a name
-  // -> yes use this as the author
-  // -> no only name - create a new author with this name
-
-  let author
-
-  if(req.body.author) {
-    console.log("Author object exists")
-    console.log(req.body.author)
-
-    if(req.body.author._id) {
-      author = {
-        _id: req.body.author._id,
-      }
-    } else {
-      author = await Author.create({
-        user: req.body.user,
-        name: req.body.author.name 
-      })
-    }
-  } else {
-    console.log("Author does not exist")
-  }
+  const author = await buildOrCreateAuthor(req)
 
   try {
     const book = await Book.create({

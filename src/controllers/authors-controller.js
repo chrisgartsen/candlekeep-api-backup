@@ -10,7 +10,6 @@ module.exports.create = async (req, res, next) => {
       user: req.body.user,
       name: req.body.name
     })
-    console.log("Created author")
     res.status(201).json({ author })
   } catch(err) {
     next(err)
