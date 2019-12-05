@@ -5,10 +5,11 @@ const cors = require('cors')
 
 const auth = require('./controllers/auth-controller')
 
-const isbn =    require('./routes/isbn')
-const books =   require('./routes/books')
-const users =   require('./routes/users')
-const authors = require('./routes/authors')
+const isbn       = require('./routes/isbn')
+const books      = require('./routes/books')
+const users      = require('./routes/users')
+const authors    = require('./routes/authors')
+const publishers = require('./routes/publishers')
 
 require('./config/env')
 require('./config/database').connectDB()
@@ -27,6 +28,7 @@ app.get('/auth/verify_credentials', auth.verifyCredentials)
 app.use('/api/isbn', isbn)
 app.use('/api/books', books)
 app.use('/api/authors', authors)
+app.use('/api/publishers', publishers)
 app.use('/api/admin/users', users)
 
 app.get('/', (req, res, next) => {

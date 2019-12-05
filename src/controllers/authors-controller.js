@@ -1,8 +1,8 @@
 const Author = require('../models/author')
-const { validate, authorSchema } = require('../utils/validations')
+const { validate, simpleSchema } = require('../utils/validations')
 
 module.exports.create = async (req, res, next) => {
-  const error = validate(req.body, authorSchema)
+  const error = validate(req.body, simpleSchema)
   if(error) return res.status(422).json({ error: error.message })
   if(req.currentUser._id != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
   try {
@@ -49,7 +49,7 @@ module.exports.getOne = async (req, res, next) => {
 }
 
 module.exports.update = async (req, res, next) => {
-  const error = validate(req.body, authorSchema)
+  const error = validate(req.body, simpleSchema)
   if(error) return res.status(422).json({ error: error.message })
   if(req.currentUser._id != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
 

@@ -20,7 +20,7 @@ module.exports.userSchema = Joi.object({
   admin: Joi.boolean()
 })
 
-module.exports.authorSchema = Joi.object({
+module.exports.simpleSchema = Joi.object({
   user: Joi.objectId().required(),
   name: Joi.string().required()
 })
