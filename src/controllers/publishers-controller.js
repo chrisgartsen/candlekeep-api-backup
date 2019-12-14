@@ -37,7 +37,7 @@ module.exports.create = async (req, res, next) => {
 
 module.exports.delete = async (req, res, next) => {
   try {
-    const publisher = Publisher.findOneAndDelete({ _id: req.params.id, user: req.currentUser._id })
+    const publisher = await Publisher.findOneAndDelete({ _id: req.params.id, user: req.currentUser._id })
     if(!publisher) return res.status(404).json({ error: 'Publisher not found' })
     res.status(200).json({ publisher })
   } catch(err) {
