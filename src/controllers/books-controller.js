@@ -1,5 +1,6 @@
 const Book = require('../models/book')
 const Author = require('../models/author')
+const Publisher = require('../models/publisher')
 const { validate, bookSchema } = require('../utils/validations')
 
 const buildOrCreateAuthor = async (req) => {
@@ -17,12 +18,31 @@ const buildOrCreateAuthor = async (req) => {
   }
 }
 
+const buildOrCreatePublisher = async (req) => {
+  if(req.body.publisher) {
+    if(req.body.publisher._id) {
+      return {
+        _id: req.body.publisher._id
+      }
+    } else {
+      return await Publisher.create({
+        user: req.body.user,
+        name: req.body.publisher.name
+      })
+    }
+  }
+}
+
 module.exports.create = async (req, res, next) => {
   const error = validate(req.body, bookSchema)
-  if(error) return res.status(422).json({ error: error.message }) 
+  if(error) {
+    console.log(error)
+    return res.status(422).json({ error: error.message }) 
+  }
   if(req.currentUser._id != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
 
   const author = await buildOrCreateAuthor(req)
+  const publisher = await buildOrCreatePublisher(req)
 
   try {
     const book = await Book.create({
@@ -30,7 +50,7 @@ module.exports.create = async (req, res, next) => {
       isbn: req.body.isbn,
       title: req.body.title,
       author: author,
-      publisher: req.body.publisher,
+      publisher: publisher,
       genre: req.body.genre,
       language: req.body.language,
       publishedDate: req.body.publishedDate,
@@ -58,9 +78,12 @@ module.exports.delete = async (req, res, next) => {
 module.exports.getAll = async (req, res, next) => {
   const userId = req.currentUser._id
   try {
-    const books = await Book.find({ user: userId} ).populate('author', '_id name')
+    const books = await Book.find({ user: userId} )
+                            .populate('author', '_id name')
+                            .populate('publisher', '_id name')
     res.status(200).json({ books: books })
   } catch(err) {
+    console.log(err)
     next(err)
   }
 }

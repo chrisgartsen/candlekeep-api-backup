@@ -12,4 +12,4 @@ const publisherSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('publisher', publisherSchema)
+module.exports = mongoose.model('Publisher', publisherSchema)
