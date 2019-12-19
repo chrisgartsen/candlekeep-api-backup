@@ -10,6 +10,7 @@ const books      = require('./routes/books')
 const users      = require('./routes/users')
 const authors    = require('./routes/authors')
 const publishers = require('./routes/publishers')
+const genres     = require('./routes/genres')
 
 require('./config/env')
 require('./config/database').connectDB()
@@ -22,6 +23,7 @@ app.use(bodyParser.json())
 
 app.use('/api', auth.verifyToken)
 app.use('/api/admin', auth.verifyAdmin)
+
 app.post('/auth/login', auth.login)
 app.get('/auth/verify_credentials', auth.verifyCredentials)
 
@@ -29,6 +31,8 @@ app.use('/api/isbn', isbn)
 app.use('/api/books', books)
 app.use('/api/authors', authors)
 app.use('/api/publishers', publishers)
+app.use('/api/genres', genres)
+
 app.use('/api/admin/users', users)
 
 app.get('/', (req, res, next) => {
