@@ -52,15 +52,8 @@ module.exports.update = async (req, res, next) => {
   const user = req.currentUser._id
   if(error) return res.status(422).json({ error: error.message })
   if(user != req.body.user) return res.status(403).json({ error: 'Unauthorised request' }) 
-  try {
-    const genre = await Genre.findOneAndUpdate({
-      _id: req.params.id, 
-      user: user
-    },
-    req.body,
-    {
-      new: true
-    })
+  try { 
+    const genre = await Genre.findOneAndUpdate({ _id: req.params.id, user: user }, req.body, { new: true })
     if(!genre) return res.status(404).json({ error: 'Genre not found'})
     res.status(200).json({ genre })
   } catch(err) {
